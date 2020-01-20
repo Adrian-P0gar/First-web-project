@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% if title  %}
+        <title>
+            {{title}}
+        </title>
+    {% else %}
+        <title>
+            Ask Mate
+        </title>
+    {% endif %}
+</head>
+<body>
+
+<h1>  Ask - Mate  </h1>
+    {% block content %}
+    {% endblock content%}
+</body>
+</html>

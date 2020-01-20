@@ -1,0 +1,37 @@
+{%extends 'layout.html' %}
+{% block content %}
+
+    <select name="sort">
+        <option value="title">Title</option>
+        <option value="submission_time">Submission Time</option>
+        <option value="vote_number">Vote Number</option>
+        <option value="message"> Message </option>
+        <option value="views_number">Views Number</option>
+    </select>
+        <select name="sort_direction">
+        <option value="ascending">Ascending</option>
+        <option value="descending">Descending</option>
+
+    </select> <br>
+    <table>
+        <tr>
+            <td>Votes</td>
+            <td>Title</td>
+            <td>Question</td>
+            <td>Time</td>
+        </tr>
+        {% for i in information%}
+        <tr>
+
+            <td> Vote Counte</td>
+         <td> {{i['title']}}</td>
+            <td>{{i['message']}}</td>
+            <td> {{i['submission_time']}}</td>
+
+        </tr>
+    </table> <br>
+
+
+        {%endfor%}
+    <button type="button">Add new question</button>
+{% endblock content %}
