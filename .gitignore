@@ -1,2 +1,4 @@
 venv/
 .idea/
+templates/upload_image.html
+img_upload.py
