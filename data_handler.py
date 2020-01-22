@@ -3,6 +3,33 @@ import csv, sys, time
 DATA_HEADER = [ 'id','submission_time','view_number','vote_number','title','message','image']
 DATA_FILE_PATH = "/home/pogar/Web Module/TW I/ask-mate-python/sample_data/question.csv"
 ANSWER_PATH = '/home/pogar/Web Module/TW I/ask-mate-python/sample_data/answer.csv'
+ANSWER_HEADER = [ "id","submission_time","vote_number","question_id","message","image"]
+
+def update_on_csv_answer(answer):
+
+    list_of_all = answer_read()
+    with open(ANSWER_PATH, 'w', newline='', encoding='utf-8') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=ANSWER_HEADER)
+        writer.writeheader()
+
+        for row in list_of_all:
+            # if row['id'] != story['id']:
+            #     writer.writerow(row)
+            if row['id'] == answer['id']:
+                row = answer
+                # writer.writeheader()
+
+            writer.writerow(row)
+
+def count_votes_answer(question_id, number):
+    all_csv_info= answer_read()
+    for row in all_csv_info:
+        if int(row['id']) == question_id:
+            row_to_edit = row
+            number_of_votes = int(row_to_edit['vote_number']) + int(number)
+            row_to_edit['vote_number'] = number_of_votes
+            update_on_csv_answer(row_to_edit)
+
 def read_csv():
     all_information = []
     with open(DATA_FILE_PATH) as csvfile:
@@ -96,14 +123,25 @@ def next_id():
     else:
         id = len(existing_data) + 1
         return  id
-
+def next_id_answer():
+    existing_data = answer_read()
+    if len(existing_data) == 0:
+        return 1
+    else:
+        id = len(existing_data) + 1
+        return  id
 def add_on_csv(story):
     with open(DATA_FILE_PATH, 'a', newline='', encoding='utf-8') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=DATA_HEADER)
         # writer.writeheader()
         story["id"] = next_id()
         writer.writerow(story)
-
+def add_on_answer(story):
+    with open(ANSWER_PATH, 'a', newline='', encoding='utf-8') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=ANSWER_HEADER)
+        # writer.writeheader()
+        story["id"] = next_id_answer()
+        writer.writerow(story)
 def get_time_stamp():
     return str(int(time.time()))
 
@@ -143,3 +181,17 @@ def count_views_number(id_question):
 
 
 
+def write_list_to_csv(list_of_questions):
+    with open(DATA_FILE_PATH, 'w', newline='', encoding='utf-8') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=DATA_HEADER)
+        writer.writeheader()
+        for row in list_of_questions:
+            writer.writerow(row)
+
+
+def delete_question(question_id):
+    questions = read_csv()
+    for question in questions:
+        if question['id'] == str(question_id):
+            questions.remove(question)
+    write_list_to_csv(questions)

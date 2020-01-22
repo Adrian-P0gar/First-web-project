@@ -40,7 +40,7 @@
             <td>{{ data.get_date_time(i['submission_time']) }}</td>
             <td> {{ i['view_number'] }}</td>
             <td><a class="editButton" href="/edit/{{ i['id'] }}">Edit</a></td>
-            <td><a class="deleteButton" href="/">Delete</a></td>
+            <td><a class="deleteButton" href="/delete/{{ i['id'] }}">Delete</a></td>
         </tr>
         {%endfor%}
     </table> <br>
