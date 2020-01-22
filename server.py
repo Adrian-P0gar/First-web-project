@@ -76,8 +76,22 @@ def display_question(question_ids):
                            answer=answer)
 
 @app.route('/question/<question_ids>/new_answer', methods=['GET', 'POST'])
-def ansewer(question_ids):
+def answer(question_ids):
     return "question_ids"
+
+@app.route("/question/<question_id>/vote_up", methods=['GET', 'POST'])
+def vote_up(question_id):
+    if request.method == 'POST':
+        data.count_votes(int(question_id), 1)
+        return redirect('/list')
+
+@app.route("/question/<question_id>/vote_down", methods=['GET', 'POST'])
+def vote_down(question_id):
+    if request.method == 'POST':
+        data.count_votes(int(question_id), -1)
+        return redirect('/list')
+
+
 
 if __name__ == '__main__':
     app.run(

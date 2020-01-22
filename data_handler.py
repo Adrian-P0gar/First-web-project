@@ -1,8 +1,8 @@
 import csv, sys, time
 
 DATA_HEADER = [ 'id','submission_time','view_number','vote_number','title','message','image']
-DATA_FILE_PATH = "/home/pogar/Web Module/TW I/ask-mate-python/sample_data/question.csv"
-ANSWER_PATH = '/home/pogar/Web Module/TW I/ask-mate-python/sample_data/answer.csv'
+DATA_FILE_PATH = "/home/katy/Desktop/python projects/First-web-project/sample_data/question.csv"
+ANSWER_PATH = '/home/katy/Desktop/python projects/First-web-project/sample_data/answer.csv'
 def read_csv():
     all_information = []
     with open(DATA_FILE_PATH) as csvfile:
@@ -122,7 +122,16 @@ def sort_by(data, label='submission_time', order='descending'):
     return [element for element in sorted(data, key=lambda x: x[label])]
 
 
+def count_votes(question_id, number):
+    all_csv_info= read_csv()
+    for row in all_csv_info:
+        if int(row['id']) == question_id:
+            row_to_edit = row
+            number_of_votes = int(row_to_edit['vote_number']) + int(number)
+            row_to_edit['vote_number'] = number_of_votes
+            update_on_csv(row_to_edit)
 
+count_votes(0,1)
 
 
 
