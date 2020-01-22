@@ -62,7 +62,7 @@ def display_question(question_ids):
                         'message': request.form.get('message')
                         }
             answer = {
-                'id':request.form.get('id'),
+                'id': request.form.get('id'),
                 'submission_time': request.form.get('submission_time'),
                 'vote_number': request.form.get('vote_number'),
                 'message': request.form.get('message'),
@@ -71,6 +71,7 @@ def display_question(question_ids):
             }
     question = data.get_csv_data(question_ids)
     answer = data.get_csv_data_answer(question_ids)
+    data.count_views_number(question_ids)
     return render_template('display_question.html',
                            question=question, question_ids=question_ids, title='Question',
                            answer=answer)

@@ -31,23 +31,13 @@
             <td>{{i['message']}}</td>
             <td>{{ data.get_date_time(i['submission_time']) }}</td>
             <td> {{ i['view_number'] }}</td>
-            <td><a class="button" href="/edit/{{ i['id'] }}">Edit  </a></td>
+            <td><a class="editButton" href="/edit/{{ i['id'] }}">Edit</a></td>
+            <td><a class="deleteButton" href="/">Delete</a></td>
         </tr>
         {%endfor%}
     </table> <br>
 
-    <style>
-    .button{
-        display:block;
-        border:1px solid gray;
-        border-radius: 5px;
-        background-color: cornsilk;
-        width:120px;
-        height:30px;
-        text-decoration:none;
-        text-align: center;
-    }
-    </style>
+
     <a class="button" href="/add"> Add new question </a>
 
 {% endblock content %}
