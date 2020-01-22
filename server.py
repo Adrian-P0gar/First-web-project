@@ -6,13 +6,13 @@ app = Flask(__name__)
 
 @app.route('/')
 @app.route('/list', methods=['GET', 'POST'])
-def index():
+def list():
     default_information = data.read_csv()
     if request.args.get('sort') is None:
         information = data.sort_by(default_information)
     else:
         information = data.sort_by(default_information, request.args.get('sort'), request.args.get('sort_direction'))
-    return render_template('index.html', information=information, title="Home", data=data)
+    return render_template('list.html', information=information, title="Home", data=data)
 
 
 @app.route('/add', methods=['GET', 'POST'])

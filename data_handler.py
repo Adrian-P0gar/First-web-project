@@ -1,11 +1,8 @@
-import csv
-import time
+import csv, sys, time
 
-DATA_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
-DATA_FILE_PATH = "/Users/alexandruoriean/codecool/web/1_tw_week/ask_mate/sample_data/question.csv"
-ANSWER_PATH = '/Users/alexandruoriean/codecool/web/1_tw_week/ask_mate/sample_data/answer.csv'
-
-
+DATA_HEADER = [ 'id','submission_time','view_number','vote_number','title','message','image']
+DATA_FILE_PATH = "/home/pogar/Web Module/TW I/ask-mate-python/sample_data/question.csv"
+ANSWER_PATH = '/home/pogar/Web Module/TW I/ask-mate-python/sample_data/answer.csv'
 def read_csv():
     all_information = []
     with open(DATA_FILE_PATH) as csvfile:
@@ -14,8 +11,8 @@ def read_csv():
             all_information.append(dict(row))
     return all_information
 
-
 def update_on_csv(story):
+
     list_of_all = read_csv()
     with open(DATA_FILE_PATH, 'w', newline='', encoding='utf-8') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=DATA_HEADER)
@@ -29,8 +26,6 @@ def update_on_csv(story):
                 # writer.writeheader()
 
             writer.writerow(row)
-
-
 def answer_read():
     all_information = []
     with open(ANSWER_PATH) as csvfile:
@@ -38,7 +33,6 @@ def answer_read():
         for row in reader:
             all_information.append(dict(row))
     return all_information
-
 
 def get_csv_data_answer(one_user_story_id=None):
     """
@@ -95,16 +89,13 @@ def get_csv_data(one_user_story_id=None):
 
             #  store modified data in temporary list
             user_stories.append(user_story)
-
-
 def next_id():
     existing_data = read_csv()
     if len(existing_data) == 0:
         return 1
     else:
         id = len(existing_data) + 1
-        return id
-
+        return  id
 
 def add_on_csv(story):
     with open(DATA_FILE_PATH, 'a', newline='', encoding='utf-8') as csvfile:
@@ -113,10 +104,8 @@ def add_on_csv(story):
         story["id"] = next_id()
         writer.writerow(story)
 
-
 def get_time_stamp():
     return str(int(time.time()))
-
 
 def get_date_time(time_stamp):
     return time.strftime("%a, %d %b %Y %H:%M:%S %Z", time.localtime(int(time_stamp)))
@@ -133,14 +122,6 @@ def sort_by(data, label='submission_time', order='descending'):
     return [element for element in sorted(data, key=lambda x: x[label])]
 
 
-def count_views_number(id_question):
-    questions = read_csv()
-    for question in questions:
-        if question['id'] == str(id_question):
-            question['view_number'] = str(int(question['view_number']) + 1)
-            update_on_csv(question)
-
-
 def count_votes(question_id, number):
     all_csv_info= read_csv()
     for row in all_csv_info:
@@ -149,3 +130,16 @@ def count_votes(question_id, number):
             number_of_votes = int(row_to_edit['vote_number']) + int(number)
             row_to_edit['vote_number'] = number_of_votes
             update_on_csv(row_to_edit)
+
+
+
+
+def count_views_number(id_question):
+    questions = read_csv()
+    for question in questions:
+        if question['id'] == str(id_question):
+            question['view_number'] = str(int(question['view_number']) + 1)
+            update_on_csv(question)
+
+
+
