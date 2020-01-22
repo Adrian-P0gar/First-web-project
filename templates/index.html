@@ -26,7 +26,15 @@
         </tr>
         {% for i in information %}
         <tr>
-            <td> Vote Counte</td>
+            <td>
+                <form action="/question/{{ i['id'] }}/vote_up" method="post">
+                    <button type="submit" name="up">Vote up</button>
+                </form>
+                {{ i['vote_number'] }}
+                <form action="/question/{{ i['id'] }}/vote_down" method="post">
+                    <button type="submit" name="down">Vote down</button>
+                </form>
+            </td>
             <td> <a href="/question/{{ i['id'] }}">{{i['title']}} </a></td>
             <td>{{i['message']}}</td>
             <td>{{ data.get_date_time(i['submission_time']) }}</td>

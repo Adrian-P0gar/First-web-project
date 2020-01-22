@@ -3,16 +3,17 @@ import data_handler as data
 
 app = Flask(__name__)
 
+
 @app.route('/')
 @app.route('/list', methods=['GET', 'POST'])
-
-def list():
+def index():
     default_information = data.read_csv()
-    if request.args.get('sort') == None:
+    if request.args.get('sort') is None:
         information = data.sort_by(default_information)
     else:
         information = data.sort_by(default_information, request.args.get('sort'), request.args.get('sort_direction'))
-    return render_template('list.html', information=information , title="Home", data=data)
+    return render_template('index.html', information=information, title="Home", data=data)
+
 
 @app.route('/add', methods=['GET', 'POST'])
 def add():
@@ -29,6 +30,7 @@ def add():
         data.add_on_csv(dict(question_content))
         return redirect('/list')
     return render_template('add.html')
+
 
 @app.route('/edit/<question_id>', methods=['GET', 'POST'])
 def edit(question_id):
@@ -53,6 +55,7 @@ def edit(question_id):
                            question_id=question_id
                            )
 
+
 @app.route('/question/<question_ids>', methods=['GET', 'POST'])
 def display_question(question_ids):
     if request.method == 'GET':
@@ -76,12 +79,28 @@ def display_question(question_ids):
                            question=question, question_ids=question_ids, title='Question',
                            answer=answer)
 
+
 @app.route('/question/<question_ids>/new_answer', methods=['GET', 'POST'])
-def ansewer(question_ids):
+def answer(question_ids):
     return "question_ids"
+
+
+@app.route("/question/<question_id>/vote_up", methods=['GET', 'POST'])
+def vote_up(question_id):
+    if request.method == 'POST':
+        data.count_votes(int(question_id), 1)
+        return redirect('/list')
+
+
+@app.route("/question/<question_id>/vote_down", methods=['GET', 'POST'])
+def vote_down(question_id):
+    if request.method == 'POST':
+        data.count_votes(int(question_id), -1)
+        return redirect('/list')
+
 
 if __name__ == '__main__':
     app.run(
-        port= 5000,
+        port=5000,
         debug=True
     )

@@ -1,8 +1,9 @@
-import csv, sys, time
+import csv
+import time
 
 DATA_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
-DATA_FILE_PATH = "sample_data/question.csv"
-ANSWER_PATH = 'sample_data/answer.csv'
+DATA_FILE_PATH = "/Users/alexandruoriean/codecool/web/1_tw_week/ask_mate/sample_data/question.csv"
+ANSWER_PATH = '/Users/alexandruoriean/codecool/web/1_tw_week/ask_mate/sample_data/answer.csv'
 
 
 def read_csv():
@@ -140,3 +141,11 @@ def count_views_number(id_question):
             update_on_csv(question)
 
 
+def count_votes(question_id, number):
+    all_csv_info= read_csv()
+    for row in all_csv_info:
+        if int(row['id']) == question_id:
+            row_to_edit = row
+            number_of_votes = int(row_to_edit['vote_number']) + int(number)
+            row_to_edit['vote_number'] = number_of_votes
+            update_on_csv(row_to_edit)
