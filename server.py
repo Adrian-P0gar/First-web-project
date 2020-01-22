@@ -52,6 +52,33 @@ def edit(question_id):
                            question_content=question_content,
                            question_id=question_id
                            )
+
+@app.route('/question/<question_ids>', methods=['GET', 'POST'])
+def display_question(question_ids):
+    if request.method == 'GET':
+        if question_ids == request.form.get('id'):
+            question = {"id": question_ids,
+                        'title': request.form.get('title'),
+                        'message': request.form.get('message')
+                        }
+            answer = {
+                'id':request.form.get('id'),
+                'submission_time': request.form.get('submission_time'),
+                'vote_number': request.form.get('vote_number'),
+                'message': request.form.get('message'),
+                'image': request.form.get('image'),
+                'question_id': request.form.get('question_id')
+            }
+    question = data.get_csv_data(question_ids)
+    answer = data.get_csv_data_answer(question_ids)
+    return render_template('display_question.html',
+                           question=question, question_ids=question_ids, title='Question',
+                           answer=answer)
+
+@app.route('/question/<question_ids>/new_answer', methods=['GET', 'POST'])
+def ansewer(question_ids):
+    return "question_ids"
+
 if __name__ == '__main__':
     app.run(
         port= 5000,

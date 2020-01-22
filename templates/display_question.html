@@ -1,0 +1,32 @@
+{%extends 'layout.html' %}
+{% block content %}
+
+    <table>
+        <tr>
+            <td> Vote Counter</td>
+            <td>Question Titlle:  {{ question['title'] }} </td>
+        </tr>
+        <tr><td> Question Message:  {{ question['message'] }} </td></tr>
+    </table>
+
+    <form action="/question/{{ question['id'] }}" method="POST">
+        <tr> <td> <a href="{{ question_ids }}/new_answer"> Do you want to add an answer? </a></td> </tr> <br>
+
+    </form>
+    <table>
+    <tr>
+        <td> Vote Number</td>
+        <td> Answer </td>
+        <td> Submission Time</td>
+    </tr>
+
+        {% for i in answer %}
+            <tr>
+            <td>{{ i['vote_number'] }}</td>
+            <td>   {{ i['message'] }} </td>
+            <td> {{ i['submission_time'] }}</td>
+            </tr>
+        {% endfor %}
+
+    </table>
+{% endblock content %}

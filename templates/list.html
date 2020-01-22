@@ -27,7 +27,7 @@
         {% for i in information %}
         <tr>
             <td> Vote Counte</td>
-             <td> {{i['title']}}</td>
+            <td> <a href="/question/{{ i['id'] }}">{{i['title']}} </a></td>
             <td>{{i['message']}}</td>
             <td>{{ data.get_date_time(i['submission_time']) }}</td>
             <td> {{ i['view_number'] }}</td>
