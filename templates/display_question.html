@@ -36,6 +36,8 @@
             <td>   {{ i['message'] }} </td>
             <td> {{ i['submission_time'] }}</td>
             </tr>
+            <td><a class="deleteButton" href="/delete/{{ i['id'] }}">Delete</a></td>
+
         {% endfor %}
 
     </table>

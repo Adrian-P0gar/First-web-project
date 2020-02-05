@@ -56,6 +56,13 @@ def edit(question_id):
                            )
 
 
+@app.route('/delete/<question_id>', methods=['GET', 'POST'])
+def delete_question(question_id):
+    form_id = request.form.get('form_id')
+    data.delete_question(question_id)
+    return redirect('/')
+
+
 @app.route('/question/<question_ids>', methods=['GET', 'POST'])
 def display_question(question_ids):
     if request.method == 'GET':

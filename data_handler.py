@@ -1,9 +1,16 @@
 import csv, sys, time
 
+<<<<<<< Updated upstream
 DATA_HEADER = [ 'id','submission_time','view_number','vote_number','title','message','image']
 DATA_FILE_PATH = "/home/pogar/Web Module/TW I/ask-mate-python/sample_data/question.csv"
 ANSWER_PATH = '/home/pogar/Web Module/TW I/ask-mate-python/sample_data/answer.csv'
 ANSWER_HEADER = [ "id","submission_time","vote_number","question_id","message","image"]
+=======
+QUESTION_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
+ANSWER_HEADER = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
+QUESTION_PATH = "/Users/alexandruoriean/codecool/web/1_tw_week/ask_mate/sample_data/question.csv"
+ANSWER_PATH = '/Users/alexandruoriean/codecool/web/1_tw_week/ask_mate/sample_data/answer.csv'
+>>>>>>> Stashed changes
 
 def update_on_csv_answer(answer):
 
@@ -32,7 +39,7 @@ def count_votes_answer(question_id, number):
 
 def read_csv():
     all_information = []
-    with open(DATA_FILE_PATH) as csvfile:
+    with open(QUESTION_PATH) as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             all_information.append(dict(row))
@@ -41,17 +48,12 @@ def read_csv():
 def update_on_csv(story):
 
     list_of_all = read_csv()
-    with open(DATA_FILE_PATH, 'w', newline='', encoding='utf-8') as csvfile:
+    with open(QUESTION_PATH, 'w', newline='', encoding='utf-8') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=DATA_HEADER)
         writer.writeheader()
-
         for row in list_of_all:
-            # if row['id'] != story['id']:
-            #     writer.writerow(row)
             if row['id'] == story['id']:
                 row = story
-                # writer.writeheader()
-
             writer.writerow(row)
 def answer_read():
     all_information = []
@@ -101,7 +103,7 @@ def get_csv_data(one_user_story_id=None):
     user_stories = []
 
     #  open csv file to read
-    with open(DATA_FILE_PATH, encoding='utf-8') as csvfile:
+    with open(QUESTION_PATH, encoding='utf-8') as csvfile:
         #  use DictReader to directly create dictionaries from each lines in the csv file
         reader = csv.DictReader(csvfile)
 
@@ -131,7 +133,7 @@ def next_id_answer():
         id = len(existing_data) + 1
         return  id
 def add_on_csv(story):
-    with open(DATA_FILE_PATH, 'a', newline='', encoding='utf-8') as csvfile:
+    with open(QUESTION_PATH, 'a', newline='', encoding='utf-8') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=DATA_HEADER)
         # writer.writeheader()
         story["id"] = next_id()
@@ -160,6 +162,17 @@ def sort_by(data, label='submission_time', order='descending'):
     return [element for element in sorted(data, key=lambda x: x[label])]
 
 
+<<<<<<< Updated upstream
+=======
+def count_views_number(question_id):
+    questions = read_csv()
+    for question in questions:
+        if question['id'] == str(question_id):
+            question['view_number'] = str(int(question['view_number']) + 1)
+            update_on_csv(question)
+
+
+>>>>>>> Stashed changes
 def count_votes(question_id, number):
     all_csv_info= read_csv()
     for row in all_csv_info:
@@ -170,6 +183,7 @@ def count_votes(question_id, number):
             update_on_csv(row_to_edit)
 
 
+<<<<<<< Updated upstream
 
 
 def count_views_number(id_question):
@@ -184,6 +198,19 @@ def count_views_number(id_question):
 def write_list_to_csv(list_of_questions):
     with open(DATA_FILE_PATH, 'w', newline='', encoding='utf-8') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=DATA_HEADER)
+=======
+def write_questions_to_csv(list_of_questions):
+    with open(QUESTION_PATH, 'w', newline='', encoding='utf-8') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=QUESTION_HEADER)
+        writer.writeheader()
+        for row in list_of_questions:
+            writer.writerow(row)
+
+
+def write_answers_to_csv(list_of_questions):
+    with open(ANSWER_PATH, 'w', newline='', encoding='utf-8') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=ANSWER_HEADER)
+>>>>>>> Stashed changes
         writer.writeheader()
         for row in list_of_questions:
             writer.writerow(row)
@@ -194,4 +221,16 @@ def delete_question(question_id):
     for question in questions:
         if question['id'] == str(question_id):
             questions.remove(question)
+<<<<<<< Updated upstream
     write_list_to_csv(questions)
+=======
+    write_list_to_csv(questions)
+
+
+def delete_answer(answer_id):
+    answers = answer_read()
+    for answer in answers:
+        if answer['id'] == str(answer_id):
+            answers.remove(answer)
+    write_list_to_csv(answers)
+>>>>>>> Stashed changes
