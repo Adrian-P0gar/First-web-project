@@ -6,13 +6,13 @@ app = Flask(__name__)
 
 @app.route('/')
 @app.route('/list', methods=['GET', 'POST'])
-def index():
+def list():
     default_information = data.read_csv()
     if request.args.get('sort') is None:
         information = data.sort_by(default_information)
     else:
         information = data.sort_by(default_information, request.args.get('sort'), request.args.get('sort_direction'))
-    return render_template('index.html', information=information, title="Home", data=data)
+    return render_template('list.html', information=information, title="Home", data=data)
 
 
 @app.route('/add', methods=['GET', 'POST'])
@@ -82,7 +82,18 @@ def display_question(question_ids):
 
 @app.route('/question/<question_ids>/new_answer', methods=['GET', 'POST'])
 def answer(question_ids):
-    return "question_ids"
+        if request.method == 'POST':
+            answer_to_write = {
+                'submission_time': data.get_time_stamp(),
+                'vote_number': 0,
+                'question_id': question_ids,
+                'message': request.form.get('message'),
+                'image': "?"
+                }
+            data.add_on_answer(answer_to_write)
+            return redirect('/list')
+        question = data.get_csv_data(question_ids)
+        return render_template('new_answer.html', question=question)
 
 
 @app.route("/question/<question_id>/vote_up", methods=['GET', 'POST'])
@@ -97,6 +108,25 @@ def vote_down(question_id):
     if request.method == 'POST':
         data.count_votes(int(question_id), -1)
         return redirect('/list')
+
+@app.route('/delete/<question_id>', methods=['GET', 'POST'])
+def delete_question(question_id):
+    form_id = request.form.get('form_id')
+    data.delete_question(question_id)
+    return redirect('/')
+
+@app.route("/answer/<answer_id>/vote_up", methods=['GET', 'POST'])
+def vote_up_answer(answer_id):
+    if request.method == "POST":
+        data.count_votes_answer(int(answer_id), 1)
+        return redirect(request.referrer)
+
+
+@app.route("/answer/<answer_id>/vote_down", methods=['GET', 'POST'])
+def vote_down_answer(answer_id):
+    if request.method == "POST":
+        data.count_votes_answer(int(answer_id), -1)
+        return redirect(request.referrer)
 
 
 if __name__ == '__main__':
