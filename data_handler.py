@@ -1,16 +1,5 @@
 import csv, sys, time
-
-<<<<<<< Updated upstream
-DATA_HEADER = [ 'id','submission_time','view_number','vote_number','title','message','image']
-DATA_FILE_PATH = "/home/pogar/Web Module/TW I/ask-mate-python/sample_data/question.csv"
-ANSWER_PATH = '/home/pogar/Web Module/TW I/ask-mate-python/sample_data/answer.csv'
-ANSWER_HEADER = [ "id","submission_time","vote_number","question_id","message","image"]
-=======
-QUESTION_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
-ANSWER_HEADER = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
-QUESTION_PATH = "/Users/alexandruoriean/codecool/web/1_tw_week/ask_mate/sample_data/question.csv"
-ANSWER_PATH = '/Users/alexandruoriean/codecool/web/1_tw_week/ask_mate/sample_data/answer.csv'
->>>>>>> Stashed changes
+import database_common
 
 def update_on_csv_answer(answer):
 
@@ -162,17 +151,7 @@ def sort_by(data, label='submission_time', order='descending'):
     return [element for element in sorted(data, key=lambda x: x[label])]
 
 
-<<<<<<< Updated upstream
-=======
-def count_views_number(question_id):
-    questions = read_csv()
-    for question in questions:
-        if question['id'] == str(question_id):
-            question['view_number'] = str(int(question['view_number']) + 1)
-            update_on_csv(question)
 
-
->>>>>>> Stashed changes
 def count_votes(question_id, number):
     all_csv_info= read_csv()
     for row in all_csv_info:
@@ -194,11 +173,10 @@ def count_views_number(id_question):
             update_on_csv(question)
 
 
-
 def write_list_to_csv(list_of_questions):
     with open(DATA_FILE_PATH, 'w', newline='', encoding='utf-8') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=DATA_HEADER)
-=======
+
 def write_questions_to_csv(list_of_questions):
     with open(QUESTION_PATH, 'w', newline='', encoding='utf-8') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=QUESTION_HEADER)
