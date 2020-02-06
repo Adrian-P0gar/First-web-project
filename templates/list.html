@@ -9,8 +9,8 @@
         <option value="view_number">Views Number</option>
     </select>
         <select name="sort_direction">
-        <option value="descending">Descending</option>
-        <option value="ascending">Ascending</option>
+        <option value="DESC">Descending</option>
+        <option value="ASC">Ascending</option>
     </select>
      <button type="submit">Submit</button>
     </form>
@@ -24,12 +24,7 @@
             <td>Time</td>
             <td>Views Numbers</td>
         </tr>
-        {% for i in questions %}
-
-{#            <tr>#}
-{#                {{ i }}#}
-{#            </tr>#}
-
+        {% for i in information %}
         <tr>
             <td>
                 <form action="/question/{{ i['id'] }}/vote_up" method="post">
@@ -42,7 +37,7 @@
             </td>
             <td> <a href="/question/{{ i['id'] }}">{{i['title']}} </a></td>
             <td>{{i['message']}}</td>
-            <td>{{ i['submission_time'] }}</td>
+            <td>{{ (i['submission_time']) }}</td>
             <td> {{ i['view_number'] }}</td>
             <td><a class="editButton" href="/edit/{{ i['id'] }}">Edit</a></td>
             <td><a class="deleteButton" href="/delete/{{ i['id'] }}">Delete</a></td>

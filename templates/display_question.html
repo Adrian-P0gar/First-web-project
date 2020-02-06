@@ -22,8 +22,8 @@
         <td> Submission Time</td>
     </tr>
 
-        {% for i in answer %}
-            <tr>
+    {% for i in answer %}
+        <tr>
             <td>
                 <form action="/answer/{{ i['id'] }}/vote_up" method="post">
                     <button type="submit" name="up">Vote up</button>
@@ -35,9 +35,8 @@
             </td>
             <td>   {{ i['message'] }} </td>
             <td> {{ i['submission_time'] }}</td>
-            </tr>
             <td><a class="deleteButton" href="/delete/{{ i['id'] }}">Delete</a></td>
-
+        </tr>
         {% endfor %}
 
     </table>
