@@ -12,40 +12,34 @@
         <option value="DESC">Descending</option>
         <option value="ASC">Ascending</option>
     </select>
-     <button type="submit">Submit</button>
+     <button type="submit">Order</button>
     </form>
     <br>
 
-    <table>
-        <tr>
-            <td>Votes</td>
-            <td>Title</td>
-            <td>Question</td>
-            <td>Time</td>
-            <td>Views Numbers</td>
-        </tr>
-        {% for i in information %}
-        <tr>
-            <td>
-                <form action="/question/{{ i['id'] }}/vote_up" method="post">
-                    <button type="submit" name="up">Vote up</button>
-                </form>
-                {{ i['vote_number'] }}
-                <form action="/question/{{ i['id'] }}/vote_down" method="post">
-                    <button type="submit" name="down">Vote down</button>
-                </form>
-            </td>
-            <td> <a href="/question/{{ i['id'] }}">{{i['title']}} </a></td>
-            <td>{{i['message']}}</td>
-            <td>{{ (i['submission_time']) }}</td>
-            <td> {{ i['view_number'] }}</td>
-            <td><a class="editButton" href="/edit/{{ i['id'] }}">Edit</a></td>
-            <td><a class="deleteButton" href="/delete/{{ i['id'] }}">Delete</a></td>
-        </tr>
-        {%endfor%}
-    </table> <br>
+    <div class="search_field">
+        <form action="/search_result" method="POST">
+            <input type="search" , name="search_field" , placeholder="Type here..." , width="200px">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    {% for question in questions %}
+    <div class="questionContainer">
+        <br />
+        <a href="/question/{{question['id']}}"> Question with id: {{ question['id'] }} </a>
+        <p class="noViews">Views: {{ question['view_number'] }}</p>
+        <p class="info">{{ question['submission_time'] }} | Votes: {{ question['vote_number'] }}</p>
+        <a href="/question/{{question['id']}}">
+            <p class="questionTitle">{{ question['title'] }}</p>
+        </a>
+        <p class="questionMessage">{{ question['message'] }}</p><br>
+        <img src="{{ question['image'] }}" alt="" width="50px">
+        <div class="editButton"><a href="/edit/{{ question['id'] }}">Edit</a></div>
+        <div class="deleteButton"><a href="/delete/{{ question['id'] }}">Delete</a></div>
+        <div class="answerButton"><a href="/question">Answer</a></div>
+        <div class="viewButton"><a href="/question/{{ question['id'] }}">View answers</a></div>
+    </div>
+    {% endfor %}
 
-
-    <a class="button" href="/add"> Add new question </a>
+    <a class="addNewQuestion" href="/add"> Add new question </a>
 
 {% endblock content %}
