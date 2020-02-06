@@ -36,6 +36,15 @@ def count_votes_for_answers(cursor, answer_id, number):
           WHERE id = %s;
           """, (number, answer_id))
 
+@database_common.connection_handler
+def get_question_by_id(cursor, question_id):
+    cursor.execute("""
+        SELECT * FROM question WHERE id = %s;
+    """,(int(question_id),))
+
+    return cursor.fetchone()
+
+
 
 @database_common.connection_handler
 def delete_question(cursor,question_ids):
@@ -81,11 +90,11 @@ def add_new_question(cursor, story):
 
 
 @database_common.connection_handler
-def add_new_answer(cursor, story):
+def add_new_answer(cursor, data):
     cursor.execute("""
         INSERT INTO answer (submission_time, vote_number,question_id,message, image)
         VALUES ( CURRENT_TIMESTAMP,%s, %s, %s, %s );
-    """, (story['vote_number'], story['question_id'], story['message'], story['image'])  )
+    """, (data['vote_number'], data['question_id'], data['message'], data['image'])  )
 
 
 @database_common.connection_handler

@@ -80,21 +80,23 @@ def display_question(question_ids):
                            answer=answer)
 
 
-
-@app.route('/question/<question_ids>/new_answer', methods=['GET', 'POST'])
-def answer(question_ids):
-        if request.method == 'POST':
-            answer_to_write = {
-                'vote_number': 0,
-                'question_id': question_ids,
-                'message': request.form.get('message'),
-                'image': "?"
-                }
-            data.add_new_answer(answer_to_write)
-            return redirect('/list')
-        questions = data.get_all_questions()
-        question = questions[int(question_ids)]
+@app.route('/question/<question_id>/new_answer', methods=['POST', 'GET'])
+def answer(question_id):
+    if request.method == 'GET':
+        question = data.get_question_by_id(question_id)
         return render_template('new_answer.html', question=question)
+    else:
+        answer_to_write = {
+            'vote_number': 0,
+            'question_id': question_id,
+            'message': request.form.get('message'),
+            'image': "?"
+        }
+
+        data.add_new_answer(answer_to_write)
+        url_to_redirect = '/question/' + str(question_id)
+        return redirect(url_to_redirect)
+
 
 
 @app.route("/question/<question_id>/vote_up", methods=['GET', 'POST'])
