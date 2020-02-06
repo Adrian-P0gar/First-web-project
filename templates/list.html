@@ -23,6 +23,13 @@
         </form>
     </div>
     {% for question in questions %}
+                 <div class="voteUp"><form action="/question/{{ question['id'] }}/vote_up" method="post">
+                    <button type="submit" name="up">+</button>
+                </form></div><br>
+                <div class="numberOfVotes">{{ question['vote_number'] }}</div><br>
+                <div class="voteDown"><form action="/question/{{ question['id'] }}/vote_down" method="post">
+                    <button type="submit" name="down">-</button>
+                </form></div>
     <div class="questionContainer">
         <br />
         <a href="/question/{{question['id']}}"> Question with id: {{ question['id'] }} </a>

@@ -80,15 +80,29 @@
 	margin: 0;
 }
 
-header {
-	width: 940px;
-	height: 200px;
-	background-color: #4a4453;
-	position: fixed;
-	top: 0;
-	margin-bottom: 30px;
+.voteUp button{
+	width: 30px;
+	height: 30px;
+	background-color: #74b807;
+	color: white;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 800;
+	font-size: 24px;
+
+
 }
 
+.voteDown button{
+	width: 30px;
+	height: 30px;
+	background-color: #9C1A1C;
+	color: white;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 800;
+	font-size: 24px;
+
+
+}
 
 .pageName {
 	background-image: radial-gradient(slategray 25%, darkslateblue 75%);

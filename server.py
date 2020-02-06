@@ -9,7 +9,7 @@ app = Flask(__name__)
 def list():
     information =  data.sort_by( request.args.get('sort'), request.args.get('sort_direction'))
     print(information)
-    return render_template('list.html', information=information, title="Home", data=data)
+    return render_template('list.html', questions=information, title="Home", data=data)
 
 
 @app.route('/add', methods=['GET', 'POST'])
@@ -78,6 +78,7 @@ def display_question(question_ids):
     return render_template('display_question.html',
                            question=question, question_ids=question_ids, title='Question',
                            answer=answer)
+
 
 
 @app.route('/question/<question_ids>/new_answer', methods=['GET', 'POST'])
